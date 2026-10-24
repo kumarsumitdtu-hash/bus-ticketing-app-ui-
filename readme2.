@@ -1,0 +1,96 @@
+Conductor Quick Ticket
+
+Mobile UI designs for a bus conductor's ticket-issuing app, using the 500D to Silk Board route as the example. The app is built for one-handed use on a moving bus: dark theme, large tap targets, and clear status at every step. It focuses on two things: issuing tickets in a few taps, and making sure a passenger is never charged twice when something goes wrong.
+
+🔗 View the design in Figma
+
+Table of contents
+Problem
+Screen layout
+Flows
+Ticket states
+Design principles
+Design decisions
+Tools
+Status
+Problem
+
+Conductors issue tickets in a crowded, moving bus, often with poor network and a printer that can jam. A slow or confusing app causes queues, and a failed print can lead to a duplicate ticket and a double charge. This design aims to:
+
+Keep a normal sale to a few taps
+Keep working when the network is down
+Recover from printer failures without creating a second sale
+Screen layout
+
+Every screen shows:
+
+Element	Purpose
+Route header	Route name and current stop (e.g. "500D to Silk Board")
+Status bar	Printer state (Ready / Printing / Jam) and network state (Online / Offline)
+Trip total	Running collection for the trip
+Main action button	Large yellow button at the bottom (e.g. "Issue ticket · ₹45")
+Flows
+1. Normal ticket
+Pick a destination from the stop grid (Majestic, Town Hall, Jayanagar, HSR Layout and more). Each shows its per-person fare.
+Choose the passenger count (1 to 5). The total updates instantly (e.g. 3 × ₹15 = ₹45).
+Tap Issue ticket.
+The Printing in progress screen shows the ticket details.
+The Printed screen confirms destination, amount, ticket number and trip total.
+Tap Next ticket to reset the screen.
+2. More stops
+The More stops button opens the full list of stops.
+Recent stops appear first, with their fares.
+Search narrows the list. If nothing matches, a No stops found state offers Clear search.
+Picking a stop returns to the main screen with that stop selected.
+Closing without picking keeps the existing selection.
+3. Offline mode
+Tickets can still be issued with no network.
+The ticket is saved locally and printed as normal.
+The confirmation shows Saved locally · Sync pending.
+The trip total keeps updating while offline.
+Saved tickets sync when the network returns.
+4. Printer jam
+The conductor issues a ticket (e.g. #104, 3 passengers to Majestic, ₹45).
+The printer jams during printing.
+A Printer jam screen shows recovery options.
+The conductor clears the jam.
+The app shows Jam cleared with the saved ticket details.
+Reprinting in progress reprints the same ticket (#104).
+Sale retained confirms the sale was counted once.
+Next ticket resets the screen, and View saved ticket stays available.
+
+Rule: a jam never creates a new sale or an extra charge. The original saved ticket is reprinted.
+
+5. Print status unknown
+If the app cannot tell whether the ticket printed (e.g. the printer lost connection), it shows Print status unknown.
+It then runs Checking Ticket #104.
+Reprinting is allowed only after the status is confirmed.
+This prevents duplicate tickets and double charging.
+Ticket states
+State	What the conductor sees
+Ready	Destination and passenger count selectable
+Printing	Spinner with ticket details
+Printed	Green confirmation with ticket number and trip total
+Saved locally	Printed, with "Sync pending" (offline)
+Jammed	Printer jam alert with recovery options
+Reprinting	Same ticket sent to the printer again
+Sale retained	Confirms the sale was counted once
+Status unknown	Ticket check runs before any reprint
+Design principles
+Speed: a normal ticket takes a few taps.
+No double charging: every recovery path reuses the original saved ticket.
+Always visible status: printer and network state appear on every screen.
+Works offline: nothing blocks ticket issuing.
+Clear feedback: distinct states for printing, success, jam, recovery and unknown.
+Glanceable: dark theme, high contrast, large numbers and buttons.
+Design decisions
+Dark theme with yellow accent: easy to read in changing light on a bus, and the main action stands out.
+Large stop grid and number buttons: easy to tap while standing and holding on.
+Selection kept on close: closing the stop search never loses what the conductor already chose.
+Reuse, never recreate: a failed print is treated as a printing problem, not a new sale.
+Check before reprint: when the outcome is unclear, the app verifies first.
+Tools
+Figma (UI design and flow mapping)
+Status
+
+Design only. Not yet implemented. Open the Figma link above to view all screens and flows.
